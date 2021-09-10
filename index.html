@@ -66,7 +66,6 @@
             border-radius: 50%;
             line-height: 60px;
             text-align: center;
-            text-underline-offset: none;
             color: white;
             font-size: 20px;
             text-decoration: none;
@@ -76,7 +75,7 @@
             cursor: pointer;
         }
 
-        #btn::after {
+        /* #btn::after {
             content: "";
             position: absolute;
             left: -5px;
@@ -89,7 +88,7 @@
             filter: blur(20px);
             z-index: -1;
             animation: chrome 5s infinite;
-        }
+        } */
 
         .arrow {
             position: absolute;
@@ -113,10 +112,10 @@
             padding: 10px;
             top: 20px;
             left: 50%;
-            transform: translate(-50%, 0) scale(1);
+            transform: translate(-50%, 0) scale(0);
             background: #9CD8BD;
             border-radius: 20px;
-            opacity: 1;
+            opacity: .7;
             transition: all 1s ease;
         }
 
@@ -177,7 +176,9 @@
         <div class="letterBody">
             <p>亲爱的尹彤小仙女：</p>
             <P>对不起，又惹你不开心了。明明是我答应过的事，却没有做到。</P>
-            <p></p>
+            <p>经过深刻检讨和反思，我向你保证，日后一定加强自我管理和危机意识，不再喝酒到断片，无论是和家人还是朋友，无论是平时还是节日</p>
+            <p>尹彤小仙女说如果我没有做到，就要跪榴莲，就要在大腿根上纹身，就代表我心里想要分手，并且必须写在保证书中。挨打就要立正，犯错里就要受处罚，和她的约定我一定会遵守的。</p>
+            <p>（我真的不想分手）</p>
         </div>
         <div class="letterFooter">
             <div class="sign">
@@ -255,8 +256,8 @@
                         rotateDeg = 300 + 1800 * clickTimes;
                         canvas.style.transform = "rotate(" + rotateDeg + "deg)";
                         setTimeout(() => {
-                            showLetter();
-                            // alert("恭喜懒懒，抽中树树哄你开心的“无限续杯”，懒懒提出想吃什么的时候，树树要立刻行动，不许说不想吃");
+                            // showLetter();
+                            alert("恭喜懒懒，抽中树树哄你开心的“无限续杯”，懒懒提出想吃什么的时候，树树要立刻行动，不许说不想吃");
                         }, 6000);
                     };
                         break;
