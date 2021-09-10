@@ -1,0 +1,359 @@
+<html>
+
+<head>
+    <title>你真棒</title>
+    <style type="text/css">
+        body {
+            background: burlywood
+        }
+
+        .container {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            height: 500px;
+            margin: 50px auto;
+            border-radius: 50%;
+            background: #ff8a00;
+            animation: flowerBackground 3s infinite linear;
+        }
+
+        @keyframes chrome {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: -400% 0;
+            }
+
+            100% {
+                background-position: -400% 0;
+            }
+        }
+
+        @keyframes flowerBackground {
+
+            0%,
+            100% {
+                background: #ff8a00;
+            }
+
+            50% {
+                background: #e52e71;
+            }
+
+        }
+
+        #turntable {
+            position: relative;
+        }
+
+        #canvas {
+            -webkit-transform: all 6s ease;
+            transition: all 6s ease;
+        }
+
+        #btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 60px;
+            height: 60px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            line-height: 60px;
+            text-align: center;
+            text-underline-offset: none;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            background: linear-gradient(to right, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 400%;
+            animation: chrome 6s infinite;
+            cursor: pointer;
+        }
+
+        #btn::after {
+            content: "";
+            position: absolute;
+            left: -5px;
+            right: -5px;
+            top: -5px;
+            bottom: -5px;
+            background: linear-gradient(to right, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 400%;
+            border-radius: 50px;
+            filter: blur(20px);
+            z-index: -1;
+            animation: chrome 5s infinite;
+        }
+
+        .arrow {
+            position: absolute;
+            display: block;
+            left: 390px;
+            top: 50%;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border-width: 30px;
+            border-style: solid;
+            border-color: transparent;
+            border-right-color: red;
+            transform: translate(0, -50%);
+        }
+
+        .letterContainer {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            padding: 10px;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%, 0) scale(1);
+            background: #9CD8BD;
+            border-radius: 20px;
+            opacity: 1;
+            transition: all 1s ease;
+        }
+
+        .letterHeader {
+            position: relative;
+            width: 50%;
+            margin: 5 auto;
+            font-size: 50px;
+            text-align: center;
+        }
+
+        .letterBody {
+            position: relative;
+            width: 90%;
+            height: 70%;
+            margin: 20px auto;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .letterFooter {
+            position: relative;
+            width: 80%;
+            height: 20%;
+            margin: 20px auto;
+            font-size: 30px;
+            text-align: center;
+        }
+        .sign {
+            padding-right: 25px;
+            padding-bottom: 20px;
+            text-align: right;
+        }
+        .confirmBtn {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            padding: 10px 20px;
+            font-size: 25px;
+            line-height: 25px;
+            background: burlywood;
+            border: #ff8a00 2px solid;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="canvas" width="400" height="400">抱歉！浏览器不支持。</canvas>
+        <a class="arrow"></a>
+        <a id="btn" href="javascript:;">GO</a>
+    </div>
+    <div id="letr" class="letterContainer">
+        <div class="letterHeader">
+            保证书
+        </div>
+        <div class="letterBody">
+            <p>亲爱的尹彤小仙女：</p>
+            <P>对不起，又惹你不开心了。明明是我答应过的事，却没有做到。</P>
+            <p></p>
+        </div>
+        <div class="letterFooter">
+            <div class="sign">
+                <a>保证人：国靖</a>
+            </div>
+            <div class="btnContainer">
+                <a class="confirmBtn" onclick="hideLetter()">确认接收</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var num = 6;   // 奖品数量
+            var item = new Array(
+                "无限续杯",
+                "神秘礼物",
+                "从新做人",
+                "保证书",
+                "传输好运ing",
+                "保证书"
+            );
+            var rotateDeg = 0;
+            var clickTimes = 0;
+            var canvas = document.getElementById('canvas');
+            var btn = document.getElementById('btn');
+            if (!canvas.getContext) {
+                alert('抱歉！浏览器不支持。');
+                return;
+            }
+            // 获取绘图上下文
+            var ctx = canvas.getContext('2d');
+            for (var i = 0; i < num; i++) {
+                // 保存当前状态
+                ctx.save();
+                // 开始一条新路径
+                ctx.beginPath();
+                // 位移到圆心，下面需要围绕圆心旋转
+                ctx.translate(200, 200);
+                // 从(0, 0)坐标开始定义一条新的子路径
+                ctx.moveTo(0, 0);
+                // 旋转弧度,需将角度转换为弧度,使用 degrees * Math.PI/180 公式进行计算。
+                var degress = 360 / num * i + 360 / num / 2;
+                ctx.rotate(degress * Math.PI / 180);
+                // 绘制圆弧
+                ctx.arc(0, 0, 200, 0, 2 * Math.PI / num, false);
+                if (i % 2 == 0) {
+                    ctx.fillStyle = '#ffb820';
+                } else {
+                    ctx.fillStyle = '#ffcb3f';
+                }
+                // 填充扇形
+                ctx.fill();
+                // 绘制边框
+                ctx.lineWidth = 0.5;
+                ctx.strokeStyle = '#f48d24';
+                ctx.stroke();
+
+                // 文字
+                ctx.translate(0, -60);
+                ctx.rotate(30 * Math.PI / 180);
+                ctx.fillStyle = '#fff';
+                ctx.font = "18px sans-serif";
+                if (i == 4) {
+                    ctx.fillText(item[i], 100, 60);
+                } else {
+                    ctx.fillText(item[i], 110, 60);
+                }
+                // 恢复前一个状态
+                ctx.restore();
+            }
+            // 抽奖
+            btn.onclick = function () {
+                switch (++clickTimes) {
+                    case 1: {
+                        rotateDeg = 300 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            showLetter();
+                            // alert("恭喜懒懒，抽中树树哄你开心的“无限续杯”，懒懒提出想吃什么的时候，树树要立刻行动，不许说不想吃");
+                        }, 6000);
+                    };
+                        break;
+                    case 2: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("好遗憾，差一点点就抽中礼物了");
+                        }, 6000);
+                    };
+                        break;
+                    case 3: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("树树给懒懒传输好运ing，下次一定中");
+                        }, 6000);
+                    };
+                        break;
+                    case 4: {
+                        rotateDeg = 180 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("恭喜懒懒，抽中树树的自我检讨“从新做人”，树树以后不再找茬Battle，做错事不再狡辩，不试图蒙混过关，违反此条就跪榴莲");
+                        }, 6000);
+                    };
+                        break;
+                    case 5: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("再接再厉，差一点点就抽中啦");
+                        }, 6000);
+                    };
+                        break;
+                    case 6: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("树树正在给懒懒传送好运ing，再试一试吧");
+                        }, 6000);
+                    };
+                        break;
+                    case 7: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("加油，还差两次就抽中了");
+                        }, 6000);
+                    };
+                        break;
+                    case 8: {
+                        rotateDeg = 60 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("好运马上就要溢出来啦，下次一定能抽中，");
+                        }, 6000);
+                    };
+                        break;
+                    case 9: {
+                        rotateDeg = 120 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            showLetter();
+                        }, 6000);
+                    };
+                        break;
+                    case 10: {
+                        rotateDeg = 240 + 1800 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("永远爱你");
+                        }, 6000);
+                    };
+                        break;
+                    default: {
+                        rotateDeg = 1860 * clickTimes;
+                        canvas.style.transform = "rotate(" + rotateDeg + "deg)";
+                        setTimeout(() => {
+                            alert("奖品已经抽完咯");
+                        }, 6000);
+                    }
+                }
+            }
+        }, false);
+        function showLetter() {
+            var letr = document.getElementById("letr")
+            letr.style.opacity = "1";
+            letr.style.transform = "translate(-50%, 0) scale(1)";
+        }
+        function hideLetter() {
+            var letr = document.getElementById("letr")
+            letr.style.opacity = ".7";
+            letr.style.transform = "translate(-50%, 0) scale(0)";
+            // document.getElementById("letr").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
